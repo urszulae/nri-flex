@@ -1,0 +1,15 @@
+integrations:
+  - name: nri-flex
+    config:
+      name: nVidiaSMIIntegration
+      apis:
+        - name: nVidiaSMI
+          commands:
+            - run: 'nvidia-smi dmon -c 1'
+              split: horizontal
+              split_by: \s*(\S+)\s+(\S+)\s+(\S+)\s+(\S+)\s+(\S+)\s+(\S+)\s+(\S+)\s+(\S+)\s+(\S+)\s+(\S+)
+              regex_match: true
+              row_start: 2
+              set_header: [gpuIndex,gpuPowerUsage_Watt,gpuTemp_C,gpuMemTemp_C,gpu_SMUtilisation_Percent,gpuMemoryUtilization_Percent,gpuEncoderUtilization_Percent,gpuDecoderUtilization_Percent,gpuMemoryClocks_MHz,gpuProcClock_MHz]
+          perc_to_decimal: true
+         
